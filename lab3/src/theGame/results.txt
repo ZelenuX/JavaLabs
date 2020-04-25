@@ -1,0 +1,6 @@
+#Sat Apr 25 00:21:35 NOVT 2020
+anotherNoname=5.12s 0.3%
+Boss=0s 100%
+Bob\ Poehovsky=19.35s 2.824%
+oname=6.19s 0.3%
+ZelenuX=17.64s 0.757%

@@ -1,0 +1,6 @@
+#Sat Apr 25 00:20:34 NOVT 2020
+anotherNoname=5.12s 0.3%
+Boss=0s 100%
+Bob\ Poehovsky=19.35s 2.824%
+oname=6.19s 0.3%
+w=7.66s 0.227%
