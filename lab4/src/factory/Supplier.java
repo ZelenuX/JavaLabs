@@ -1,0 +1,57 @@
+package factory;
+
+import factory.resultsAndComponents.Storable;
+
+import java.security.InvalidParameterException;
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class Supplier {
+    private final Timer timer;
+    private int timerInterval;
+    private TimerTask task;
+    private Storage storage;
+    private Storable exampleObject;
+    private class MyTimerTask extends TimerTask {
+        @Override
+        public void run() {
+            Storable tmp = exampleObject.getInstance();
+            //System.out.println("s-: " + tmp.getKindName() + ' ' + tmp.getId());
+            try {
+                storage.put(tmp);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return;
+            }
+            //System.out.println("s+: " + tmp.getKindName() + ' ' + tmp.getId());
+        }
+    };
+
+    public Supplier(Storage storage, int msInterval, Storable exampleObject) throws InvalidParameterException{
+        if (storage == null || msInterval <= 0)
+            throw new InvalidParameterException();
+        timer = new Timer(true);
+        this.storage = storage;
+        this.exampleObject = exampleObject;
+        task = new MyTimerTask();
+        timer.scheduleAtFixedRate(task, 0, msInterval);
+        timerInterval = msInterval;
+    }
+    public void terminate(){
+        timer.cancel();
+    }
+    public void setInterval(int msInterval) throws InvalidParameterException {
+        if (msInterval <= 0)
+            throw new InvalidParameterException();
+        if (msInterval == timerInterval)
+            return;
+        task.cancel();
+        task = new MyTimerTask();
+        timer.purge();
+        timer.scheduleAtFixedRate(task, msInterval, msInterval);
+        timerInterval = msInterval;
+    }
+    public int getInterval(){
+        return timerInterval;
+    }
+}
